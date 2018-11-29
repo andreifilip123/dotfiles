@@ -1,0 +1,7 @@
+[user]
+	name = Author name
+	email = author@email.com
+[push]
+	default = simple
+[core]
+	excludesfile = /Users/$USER/.gitignore_global
