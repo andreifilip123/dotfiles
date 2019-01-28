@@ -59,6 +59,14 @@ export PATH="/usr/local/opt/php@7.1/sbin:$PATH"
 # Added by n-install (see http://git.io/n-install-repo).
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  
 
+# Add android emulator to path
+export PATH="/Users/$USER/Library/Android/sdk/emulator:$PATH"
+
+export ANDROID_HOME="/Users/$USER/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+
+export PATH="$PATH:/Users/$USER/Downloads/flutter/bin"
+
 ############################
 #Custom added functionality#
 ############################
@@ -93,6 +101,9 @@ tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | s
   find ~/.ssh/ -type f -exec grep -l "PRIVATE" {} \; | xargs ssh-add &> /dev/null 
 } &> /dev/null 
 
+# Remove all node_modules directories from folder
+alias clear_node_modules="find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
+
 # Function to create new alias
 new-alias () { 
   if [ -z "$1" ]; then
@@ -112,7 +123,15 @@ new-alias () {
     fi
   fi
 
-  echo "alias $NAME='$DEFINTION'" >> ~/.zshrc
-  . ~/.zshrc
+  echo "alias $NAME='$DEFINTION'" >> ~/.zsh_aliases
+  . ~/.zsh_aliases
 }
 
+
+###-tns-completion-start-###
+if [ -f /Users/filip/.tnsrc ]; then 
+    source /Users/filip/.tnsrc 
+fi
+###-tns-completion-end-###
+
+source /Users/filip/.zsh_signature
