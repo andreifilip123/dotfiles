@@ -129,9 +129,9 @@ new-alias () {
 
 
 ###-tns-completion-start-###
-if [ -f /Users/filip/.tnsrc ]; then 
-    source /Users/filip/.tnsrc 
+if [ -f /Users/$USER/.tnsrc ]; then 
+    source /Users/$USER/.tnsrc 
 fi
 ###-tns-completion-end-###
 
-source /Users/filip/.zsh_signature
+source /Users/$USER/.zsh_signature
