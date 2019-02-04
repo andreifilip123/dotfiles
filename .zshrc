@@ -32,6 +32,7 @@ plugins=(
   extract
   npm
   node
+  z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -64,8 +65,9 @@ export PATH="/Users/$USER/Library/Android/sdk/emulator:$PATH"
 
 export ANDROID_HOME="/Users/$USER/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
-
 export PATH="$PATH:/Users/$USER/Downloads/flutter/bin"
+
+export PATH="/usr/local/sbin:$PATH"
 
 ############################
 #Custom added functionality#
