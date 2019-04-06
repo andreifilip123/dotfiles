@@ -25,14 +25,6 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  git-flow-completion
-  zsh-syntax-highlighting
-  osx
-  alias-tips
-  extract
-  npm
-  node
-  z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -65,7 +57,8 @@ export PATH="/Users/$USER/Library/Android/sdk/emulator:$PATH"
 
 export ANDROID_HOME="/Users/$USER/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
-export PATH="$PATH:/Users/$USER/Downloads/flutter/bin"
+
+export PATH="$PATH:/Users/$USER/flutter/bin"
 
 export PATH="/usr/local/sbin:$PATH"
 
@@ -85,26 +78,11 @@ fi
 PROMPT_COMMAND='pwd > "${HOME}/.cwd"'
 [[ -f "${HOME}/.cwd" ]] && cd "$(< ${HOME}/.cwd)" 
 
-# MacOS disable hold for special characters
-alias disableHold='defaults write -g ApplePressAndHoldEnabled -bool false'
-alias enableHold='defaults write -g ApplePressAndHoldEnabled -bool true'
-
-# MacOS show hidden files
-alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
-
-# Function to transfer files
-transfer() { if [ $# -eq 0 ]; then echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi 
-tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }; alias transfer=transfer
-
 # script to initialize ssh-agent and add all identities to it 
 { 
   eval `ssh-agent -s` 
   find ~/.ssh/ -type f -exec grep -l "PRIVATE" {} \; | xargs ssh-add &> /dev/null 
 } &> /dev/null 
-
-# Remove all node_modules directories from folder
-alias clear_node_modules="find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
 
 # Function to create new alias
 new-alias () { 
@@ -129,11 +107,5 @@ new-alias () {
   . ~/.zsh_aliases
 }
 
-
-###-tns-completion-start-###
-if [ -f /Users/$USER/.tnsrc ]; then 
-    source /Users/$USER/.tnsrc 
-fi
-###-tns-completion-end-###
-
 source /Users/$USER/.zsh_signature
+
