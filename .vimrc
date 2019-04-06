@@ -18,6 +18,7 @@ set foldmethod=syntax
 set laststatus=2
 set noshowmode
 set encoding=utf-8
+set clipboard=unnamed
 
 
 " Automatically install Vim Plug if not installed
