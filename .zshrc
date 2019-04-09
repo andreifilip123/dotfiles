@@ -109,3 +109,5 @@ new-alias () {
 
 source /Users/$USER/.zsh_signature
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
