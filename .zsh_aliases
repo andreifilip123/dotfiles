@@ -27,6 +27,9 @@ alias rnrar='rnra --variant release'
 alias cleanrn1='rm -rf node_modules; cd ios; rm -rf Pods build; cd ../; yarn; yarn postinstall-with-wallet-data; cd ios; pod install; cd ../; watchman     watch-del-all; echo "\n\n\nNow open xcode and build from there. After it fails, come back here and run cleanrn2"'
 alias cleanrn2='cd node_modules/react-native/third-party/glog-0.3.5;./configure;make;make install; cd ../../../../'
 alias cleanrn="rm -rf node_modules; cd ios/; rm -rf Pods build; cd ..; yarn; yarn postinstall-with-wallet-data; cd ios/; pod install; cd ..; cd android; ./gradlew clean; cd ..;"
+alias rnclean="rm -rf node_modules; cd ios/; rm -rf Pods build; cd ..; yarn; yarn postinstall-with-wallet-data; cd ios/; pod install; cd ..; cd android; ./gradlew clean; cd ..;"
+alias pods='cd ios; rm -rf Pods build; pod install; cd ../'
+alias devices='instruments -s devices'
 
 # Aliases for git
 alias git="hub"
@@ -38,6 +41,7 @@ alias gc="git commit"
 alias gd="git diff"
 alias gds="git diff --cached"
 alias gaa="git add -A"
+alias gaas='gaa;g stash;'
 alias ga="git add"
 alias gp="git push"
 alias gf="git fetch"
@@ -97,3 +101,4 @@ alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 alias vi="vim"
 alias pa="php artisan"
 
+alias vim='/usr/local/Cellar/vim/8.1.1100/bin/vim'
