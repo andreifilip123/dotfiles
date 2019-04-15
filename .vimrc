@@ -59,6 +59,26 @@ set wildignore+=*/tmp/*,*/node_modules/*     " MacOSX/Linux
 
 " Sudo to write
 cnoremap w!! w !sudo tee % >/dev/null
+command! Q :q
+command! W :w
+
+" ================ Turn Off Swap Files ==============
+set noswapfile
+set nobackup
+set nowb
+
+" ================ Persistent Undo ==================
+" Keep undo history across sessions, by storing in file.
+" Only works all the time.
+if has('persistent_undo')
+  silent !mkdir ~/.vim/backups > /dev/null 2>&1
+  set undodir=~/.vim/backups
+  set undofile
+endif
+
+" Auto indent pasted text
+nnoremap p p=`]<C-o>
+nnoremap P P=`]<C-o>
 
 "
 " Line Return
@@ -97,6 +117,7 @@ Plug 'mhinz/vim-signify' " Show git diff signs before lines
 
 " Utility
 Plug 'scrooloose/nerdtree' " Navigation tree
+Plug 'jistr/vim-nerdtree-tabs' " Tabs for NERDTree
 Plug 'kien/ctrlp.vim' " Search for file
 Plug 'itchyny/lightline.vim' " That nice line at the bottom of this file
 Plug 'ervandew/supertab' "Autocompletion using tab
@@ -114,25 +135,37 @@ Plug 'othree/javascript-libraries-syntax.vim'
 
 call plug#end()
 
+let mapleader = ","
 syntax on
+syntax enable
 colorscheme monokai
 set t_Co=256
 let g:monokai_term_italic = 1
 let g:monokai_gui_italic = 1
 
 " Remap ctrlp to cmd T
-let g:ctrlp_map = '<c-t>'
+let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]node_modules$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
+  \ 'dir':  '\.git$\|node_modules\|ios\/build\|ios\/.*\.xcworkspace\|ios\/.*\.xcodeproj\|ios\/Pods\|android\/app\/build$',
+  \ 'file': '\.exe$\|\.so$\|\.dat$'
   \ }
 let g:ctrlp_working_path_mode = 'ra'
 
+" FZF
+nnoremap <silent> <Leader>f :Ag<CR>
+
 " NERDTree config
-nmap <C-E> :NERDTreeToggle<CR>
+nmap <C-n> :NERDTreeTabsToggle<CR>
 let g:NERDTreeWinSize=30
+let g:nerdtree_tabs_open_on_console_startup=1
+
+" Close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Open NERDTree automatically when vim starts up on opening a directory
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
+nmap <Leader>s :write<Enter>
 
