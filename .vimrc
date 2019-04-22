@@ -114,6 +114,7 @@ Plug 'tpope/vim-sensible'
 " Looks
 Plug 'crusoexia/vim-monokai' " Monokai Theme
 Plug 'mhinz/vim-signify' " Show git diff signs before lines
+Plug 'fortes/vim-escuro'
 
 " Utility
 Plug 'scrooloose/nerdtree' " Navigation tree
@@ -125,6 +126,7 @@ Plug 'tpope/vim-commentary' " Comment using gc or gcc
 Plug 'Raimondi/delimitMate' " Auto insert brackets/quotes/etc
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim' " Search in all project
+Plug 'pakutoma/toggle-terminal' " Toggle :terminal
 
 " Languages
 Plug 'sheerun/vim-polyglot' " Collection of languages
@@ -138,7 +140,7 @@ call plug#end()
 let mapleader = ","
 syntax on
 syntax enable
-colorscheme monokai
+color escuro
 set t_Co=256
 let g:monokai_term_italic = 1
 let g:monokai_gui_italic = 1
@@ -167,5 +169,11 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
+nnoremap . <NOP>
 nmap <Leader>s :write<Enter>
+set termwinsize=15x0
+set splitbelow
+tnoremap <silent> <Leader>. <C-w>:ToggleTerminal<CR>
+nnoremap <silent> <Leader>. :ToggleTerminal<CR>
+let g:toggle_terminal#command = 'zsh'
 
