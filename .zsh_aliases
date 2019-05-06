@@ -100,5 +100,5 @@ greset() {
 alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 alias vi="vim"
 alias pa="php artisan"
-
-alias vim='/usr/local/Cellar/vim/8.1.1100/bin/vim'
+alias :q='exit'
+alias android='emulator -avd $(emulator -list-avds | head -n 1)'
