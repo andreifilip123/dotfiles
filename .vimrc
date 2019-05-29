@@ -60,6 +60,8 @@ set wildignore+=*/tmp/*,*/node_modules/*     " MacOSX/Linux
 " Sudo to write
 cnoremap w!! w !sudo tee % >/dev/null
 command! Q :q
+command! Qa :qa
+command! QA :qa
 command! W :w
 
 " ================ Turn Off Swap Files ==============
@@ -158,7 +160,7 @@ let g:ctrlp_working_path_mode = 'ra'
 nnoremap <silent> <Leader>f :Ag<CR>
 
 " NERDTree config
-nmap <C-n> :NERDTreeTabsToggle<CR>
+nmap <Leader>n :NERDTreeTabsToggle<CR>
 let g:NERDTreeWinSize=30
 let g:nerdtree_tabs_open_on_console_startup=1
 
@@ -177,10 +179,19 @@ tnoremap <silent> <Leader>. <C-w>:ToggleTerminal<CR>
 nnoremap <silent> <Leader>. :ToggleTerminal<CR>
 let g:toggle_terminal#command = 'zsh'
 
-set number relativenumber
+" Check if NERDTree is open or active
+function! IsNERDTreeOpen()
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
 
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
+" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" file, and we're not in vimdiff
+function! SyncTree()
+  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+    NERDTreeFind
+    wincmd p
+  endif
+endfunction
+
+" Highlight currently open buffer in NERDTree
+autocmd BufEnter * call SyncTree()
