@@ -68,6 +68,7 @@ export PATH="/usr/local/sbin:$PATH"
 
 # Change default language 
 export LANG=en_EN.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # Import aliases from separate file
 if [ -f ~/.zsh_aliases ]; then
