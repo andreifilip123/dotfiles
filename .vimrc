@@ -129,6 +129,9 @@ Plug 'Raimondi/delimitMate' " Auto insert brackets/quotes/etc
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim' " Search in all project
 Plug 'pakutoma/toggle-terminal' " Toggle :terminal
+Plug 'vim-syntastic/syntastic' " ESLint and stuff
+Plug 'w0rp/ale' " ESLint and stuff
+Plug 'zivyangll/git-blame.vim' " Git blame
 
 " Languages
 Plug 'sheerun/vim-polyglot' " Collection of languages
@@ -195,3 +198,22 @@ endfunction
 
 " Highlight currently open buffer in NERDTree
 autocmd BufEnter * call SyncTree()
+
+" Open images in vim (requires iterm)
+autocmd BufEnter *.png,*.jpg,*gif exec "! ~/.iterm2/imgcat ".expand("%") | :bw
+
+" Configure Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = 'npm run lint --'
+
+let g:ale_fixers = {
+\  'javascript': ['eslint']
+\}
+
