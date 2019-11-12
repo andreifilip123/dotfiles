@@ -14,7 +14,7 @@ alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall F
 alias clear_node_modules="find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
 
 # React native aliases
-alias rn='react-native'
+alias rn='npx react-native'
 alias rnri='rn run-ios'
 alias rnris='rnri --simulator "iPhone SE"'
 alias rnrisr='rnris --configuration Release'
