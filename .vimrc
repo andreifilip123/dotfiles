@@ -217,3 +217,5 @@ let g:ale_fixers = {
 \  'javascript': ['eslint']
 \}
 
+" Use ESC to exit insert mode in :term
+tnoremap <Esc> <C-\\><C-n>

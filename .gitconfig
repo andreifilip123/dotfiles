@@ -5,3 +5,8 @@
 	default = simple
 [core]
 	excludesfile = /Users/$USER/.gitignore_global
+	editor = nvim
+[hub]
+    protocol = ssh
+[alias]
+	unstage = reset HEAD --

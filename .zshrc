@@ -25,6 +25,7 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  extract
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -41,8 +42,9 @@ precmd() { eval "$PROMPT_COMMAND" }
 export PATH=$PATH:$HOME/.composer/vendor/bin
 
 # Add python to path
-if [ -d "$HOME/Library/Python/3.7/bin/" ] ; then
-    PATH="$HOME/Library/Python/3.7/bin/:$PATH"
+if [ -d "$HOME/Library/Python/3.8/bin/" ] ; then
+    PATH="$HOME/Library/Python/3.8/bin/:$PATH"
+    PATH="$HOME/Library/Python/3.8/lib/:$PATH"
 fi
 
 # Add php to path
@@ -58,9 +60,16 @@ export PATH="/Users/$USER/Library/Android/sdk/emulator:$PATH"
 export ANDROID_HOME="/Users/$USER/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 
+export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+
 export PATH="$PATH:/Users/$USER/flutter/bin"
 
 export PATH="/usr/local/sbin:$PATH"
+
+export GOPATH="/Users/$USER/.go"
+export PATH="$PATH:${GOPATH}/bin"
 
 ############################
 #Custom added functionality#
@@ -81,9 +90,9 @@ PROMPT_COMMAND='pwd > "${HOME}/.cwd"'
 
 # script to initialize ssh-agent and add all identities to it 
 { 
-  eval `ssh-agent -s` 
-  find ~/.ssh/ -type f -exec grep -l "PRIVATE" {} \; | xargs ssh-add &> /dev/null 
-} &> /dev/null 
+    eval `ssh-agent -s`
+    find ~/.ssh/ -type f -exec grep -l "PRIVATE" {} \; | xargs ssh-add -K
+}
 
 # Function to create new alias
 new-alias () { 
@@ -108,7 +117,28 @@ new-alias () {
   . ~/.zsh_aliases
 }
 
+# Configure shell completion from brew packages
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+fi
+
 source /Users/$USER/.zsh_signature
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Add completion for grepfind
+source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.zsh
+
+# Add completion for github
+eval "$(gh completion -s zsh)"
+
+# Add pyenv to path
+export PATH="/Users/filip/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
